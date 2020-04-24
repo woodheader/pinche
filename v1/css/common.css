@@ -1,0 +1,112 @@
+.statistics-table{
+  position: absolute;
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow: scroll;
+  min-width: 100%;
+  z-index: 1;
+}
+.statistics-table th,
+.statistics-table td{
+  border: 1px solid #dfddd9;
+  height: 50px;
+  text-align: left;
+  padding: 0 10px;
+}
+.statistics-table.fixed-table{
+  background: #ddd;
+}
+.statistics-table.fixed-table td{
+  border: 1px solid transparent;
+  height: 0px !important;
+  visibility: hidden;
+  overflow: hidden;
+}
+.statistics-table div.file{
+  position: relative;
+  margin-top: 15px;
+  white-space: nowrap;
+}
+.statistics-table div.file a{
+  color: #666;
+}
+.statistics-table div.file:before{
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url(../../../img/member/sprites/form/feedback.png);
+  background-position: -34px -369px;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+  margin-right: 5px;
+}
+.statistics-table div.file > div{
+  background-color: rgba(91,91,91,0.9);
+  color: #fff;
+  position: absolute;
+  padding: 8px;
+  border-radius: 3px;
+  display: none;
+  text-align: left;
+  white-space: nowrap;
+  top: -55px;
+  left: 50%;
+}
+.statistics-table tbody tr:first-child div.file > div{
+  top: 20px;
+}
+.statistics-table div.file:last-child{
+  margin: 0 0 15px 0;
+}
+.statistics-table div.file:first-child{
+  margin-bottom: 0;
+}
+.statistics-table div.file:hover > div{
+  display: inline-block;
+}
+#trade-detail .footer > div,
+#statistics-box .footer > div{
+  display: inline-block;
+  vertical-align: middle;
+}
+#statistics-box .footer {
+  background: #faf9f5;
+  z-index: 3;
+  padding-left: 12px;
+  box-sizing:border-box;
+  position: relative;
+}
+.statistics-table th{
+  height: 40px;
+  min-width: 100px;
+  width: 100px;
+  background: #f0eeec;
+}
+.statistics-table .seq{
+  width: 34px;
+  min-width: 34px;
+  background: #2c96f2;
+}
+
+.button {
+	width: 60px;
+  height: 20px;
+  text-align: center;
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #FF9800;
+  background-color: #ffc107;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.button a {
+	text-decoration: none;
+}
+
+.mynote {
+	color:red;
+	font-weight:bold;	
+}
