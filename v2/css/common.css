@@ -185,8 +185,21 @@
   float: right;
 }
 
-.spanMsg {
+.btnOrderFull {
+  cursor: pointer;
+  background-color: #9e9e9ea8;
+  border-radius: 6px;
+  color: #fff;
+  margin-right: 6px;
+  border-color: #9e9e9ea8;
+  float: right;
+}
 
+.spanMsg {
+  font-size: 8px;
+  color: red;
+  display: none;
+  float: right;
 }
 
 .div-msg-left {

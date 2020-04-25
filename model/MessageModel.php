@@ -394,7 +394,7 @@ EOF;
     public function getMessageList($goto = '', $carTime = '', $updateTime = '',$channel = '') {
         //$this->addWhere(['like', 'create_time', date('Y-m-d')]);
         if (!empty($carTime)) {
-            $this->addWhere(['between', 'car_time', date('Y-m-d H:i:s', strtotime($carTime) - 86400), date('Y-m-d H:i:s', strtotime($carTime) + 86400*10)]);
+            $this->addWhere(['between', 'car_time', date('Y-m-d H:i:s', strtotime($carTime) - 43200), date('Y-m-d H:i:s', strtotime($carTime) + 86400*10)]);
         }
         if (!empty($goto)) {
             $this->addWhere(['in', 'goto', $goto]);

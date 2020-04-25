@@ -1,2 +1,4 @@
 {"status":"error","code":101,"msg":"Incorrect APP ID"}
 {"status":"error","code":101,"msg":"Incorrect APP ID"}
+{"status":"error","code":252,"msg":"Incorrect recipient message address, if you are using the addressbook model, this addressbook does not have any contacts"}
+{"status":"error","code":252,"msg":"Incorrect recipient message address, if you are using the addressbook model, this addressbook does not have any contacts"}

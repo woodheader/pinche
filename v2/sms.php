@@ -36,7 +36,49 @@ switch ($act) {
         }
         // 检查手机号是否发送过验证码
         $sms = new SmsModel();
-        $smsResult = $sms->getSmsByConditions($msgResult['car_tel']);
+        $smsResult = $sms->getSmsByConditions($msgResult['car_tel'],SmsModel::TYPE_DRIVER);
+        if (empty($smsResult)) {
+            $returnArr = [
+                'result' => 0,
+                'msg' => '没有找到验证码发送记录！'
+            ];
+            die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        }
+        $returnArr = [
+            'result' => 1,
+            'msg' => '发送过验证码！'
+        ];
+        die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        break;
+    // 查询乘客手机号是否已经发送过验证码
+    case 'queryPassenger':
+        if ($id <= 0) {
+            $returnArr = [
+                'result' => 0,
+                'msg' => 'id不能小于或等于0！'
+            ];
+            die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        }
+        $msgObj = new MessageModel();
+        $msgResult = $msgObj->getMessageById($id);
+        if (empty($msgResult)) {
+            $returnArr = [
+                'result' => 0,
+                'msg' => '找不到行程信息！'
+            ];
+            die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        }
+        $mobile = empty($_REQUEST['mobile']) ? 0 : $_REQUEST['mobile'];
+        if (empty($mobile)) {
+            $returnArr = [
+                'result' => 0,
+                'msg' => '手机号不能为空！'
+            ];
+            die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        }
+        // 检查手机号是否发送过验证码
+        $sms = new SmsModel();
+        $smsResult = $sms->getSmsByConditions($mobile,SmsModel::TYPE_PASSENGER);
         if (empty($smsResult)) {
             $returnArr = [
                 'result' => 0,
@@ -57,10 +99,18 @@ switch ($act) {
         ];
 
         $mobile = empty($_POST['mobile']) ? '' : $_POST['mobile'];
-        if (empty($mobile)) {
+        $type = empty($_POST['type']) ? '' : $_POST['type'];
+        if (empty($mobile) || !is_numeric($mobile)) {
             $returnArr = [
                 'result' => 0,
-                'msg' => '手机号码不能为空！'
+                'msg' => '错误的手机号码！'
+            ];
+            die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        }
+        if (empty($type) || !in_array($type, SmsModel::TYPE_ARR)) {
+            $returnArr = [
+                'result' => 0,
+                'msg' => '错误的发送类型！'
             ];
             die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
         }
@@ -69,9 +119,9 @@ switch ($act) {
 
         // 先保存入库
         $sms = new SmsModel();
-        $sms->setCarTel($mobile);
+        $sms->setMobile($mobile);
         // 若对应手机号已经发送过短信，并且还没有过期，就不再二次发送，节省费用
-        $result = $sms->getSmsByConditions($mobile);
+        $result = $sms->getSmsByConditions($mobile, $type);
         if (!empty($result)) {
             if ($result['expire_time'] > date('Y-m-d H:i:s')) {
                 die(json_encode($returnArr));
@@ -80,6 +130,7 @@ switch ($act) {
         $sms->setCode($code);
         $sms->setExpireTime(date('Y-m-d H:i:s', strtotime('+1 year')));
         $sms->setStatus(SmsModel::STATUS_VALID);
+        $sms->setType($type);
         $sms->setCreateTime(date('Y-m-d H:i:s'));
         $sms->setUpdateTime(date('Y-m-d H:i:s'));
         $r = $sms->save();
@@ -92,9 +143,13 @@ switch ($act) {
         }
 
         // 开始发送
+        $codeTemplateArr = [
+            SmsModel::TYPE_DRIVER => 'vrNoP3',
+            SmsModel::TYPE_PASSENGER => 'zUeMA',
+        ];
         $submail = new MESSAGEXsend($message_configs);
         $submail->SetTo($mobile);
-        $submail->SetProject('vrNoP3');
+        $submail->SetProject($codeTemplateArr[$type]);
         $submail->AddVar('code', $code);
         $send=$submail->xsend();
         if ($send['status'] != 'success') {
@@ -105,7 +160,6 @@ switch ($act) {
             ];
             die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
         }
-
         die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
         break;
     case 'sendPassenger':

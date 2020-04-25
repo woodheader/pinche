@@ -113,12 +113,12 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
             $trHtml .= '<div class="div-msg-left">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期:</div><div class="div-msg-right">'.$msg['car_time'].'</div><br>';
             $trHtml .= '<div class="div-msg-left">方&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;向:</div><div class="div-msg-right"><span style="color:'.$color.';font-weight:bold;">'.$goto.'</span></div><br>';
             $trHtml .= '<div class="div-msg-left">行驶路线:</div><div class="div-msg-right">'.$msg['car_line'].'</div><br>';
-            $trHtml .= '<div class="div-msg-left">座&nbsp;&nbsp;位&nbsp;&nbsp;数:</div><div class="div-msg-right allow-edit" contenteditable="true">'.$msg['car_seatnum'].'位</div><br>';
+            $trHtml .= '<div class="div-msg-left">座&nbsp;&nbsp;位&nbsp;&nbsp;数:</div><div class="div-msg-right allow-edit" contenteditable="true">'.$msg['car_seatnum'].'位'.($msg['car_seatnum'] <= 0 ? '<b style="color: red;">(车满)</b>' : '').'</div><br>';
             $trHtml .= '<div class="div-msg-left">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价:</div><div class="div-msg-right">'.$carPrice.'</div><br>';
             $trHtml .= '<div class="div-msg-left">联系方式:</div><div class="div-msg-right"><a href="tel://'.$msg['car_tel'].'">'.help::replaceWithStar($msg['car_tel'],'****',3,4).'</a></div><br>';
             $trHtml .= empty($msg['car_wechat_img']) ? '' : '<div class="div-msg-left">车主微信:</div><div class="div-msg-right"><img class="qrcode" src="'.$msg['car_wechat_img'].'" width="24px" height="24px" alt="车主微信"></div><br>';
             $trHtml .= '<div class="div-msg-left">车牌信息:</div><div class="div-msg-right">'.$msg['car_license_plate'].'</div><br>';
-            $trHtml .= '<button class="btnCopy" style="cursor:pointer;">复制</button><button class="btnCancel" style="cursor:pointer;">取消</button><button class="btnOrder" style="cursor:pointer;">预订</button>';
+            $trHtml .= '<button class="btnCopy" style="cursor:pointer;">复制</button><button class="btnCancel" style="cursor:pointer;">取消</button><button class="'.($msg['car_seatnum'] <= 0 ? 'btnOrderFull' : 'btnOrder').'" style="cursor:pointer;">预订</button>';
             $trHtml .= '</td></tr>';
         }
         echo $trHtml;
@@ -148,6 +148,7 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
                     <label for="orderMobile">手机号</label>
                     <input type="text" name="orderMobile" id="orderMobile" value="" class="text ui-widget-content ui-corner-all">
                     <button class="btnPassenger" style="cursor:pointer;font-size: 12px;">发送</button>
+                    <span class="spanMsg">(验证码已发送到您手机)</span>
                 </div>
                 <label for="orderCode">验证码</label>
                 <input type="text" name="orderCode" id="orderCode" value="" class="text ui-widget-content ui-corner-all">

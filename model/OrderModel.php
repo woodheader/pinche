@@ -140,4 +140,23 @@ EOF;
         $this->updateTime = $updateTime;
     }
 
+    public function getOrderInfo($msgId = '', $orderTel = '') {
+        if (empty($msgId) || empty($orderTel)) {
+            return [];
+        }
+        if (!empty($msgId)) {
+            $this->addWhere(['msg_id' => $msgId]);
+        }
+        if (!empty($orderTel)) {
+            $this->addWhere(['order_tel' => $orderTel]);
+        }
+        $this->addWhere(['status' => SmsModel::STATUS_VALID]);
+        $this->orderBy('update_time desc');
+        $result = $this->one();
+        if (empty($result)) {
+            return [];
+        }
+        return $result;
+    }
+
 }

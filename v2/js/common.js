@@ -88,17 +88,20 @@
     /**
      * 发送验证码
      */
-    var sendCode = function (mobile) {
+    var sendCode = function (mobile,type) {
+        var r = 0;
         $.ajax({
             url: server + '/sms.php',
             type: 'post',
             dataType: 'json',
-            data: 'act=send&mobile=' + mobile,
+            data: 'act=send&mobile=' + mobile+'&type='+type,
+            async: false,
             success: function(res) {
                 console.log("服务器返回数据："+JSON.stringify(res));
-                return res;
+                r = res.result;
             }
         });
+        return r;
     }
 
     /**
@@ -233,7 +236,7 @@
             buttons: {
                 '确定': function() {
                     $(this).dialog( 'close' );
-                    sendCode(otherData.mobile);
+                    sendCode(otherData.mobile,1);
                     smsCodeDialog(otherData.title,otherData.action,otherData.dataId,otherData.seatNum);
                 },
                 '取消': function() {
@@ -248,14 +251,52 @@
      */
     var btnOrderClick = function () {
         $('.btnOrder').click(function() {
-            orderDialog();
+            // 数据ID
+            var id = $(this).parent('td').prev().html();
+            orderDialog(id);
+        });
+    }
+
+    /**
+     * 预订发送验证码按钮
+     */
+    var btnPassengerClick = function () {
+        $('.btnPassenger').click(function() {
+            var btnPassenger = $(this);
+            var mobile = $('#orderMobile').val();
+            if (empty(mobile)) {
+                $( ".validateTips" ).text('请填写手机号').addClass( "ui-state-highlight" );
+                return;
+            }
+            var sendResult = sendCode(mobile, 2);
+            btnPassenger.css('background-color', '#9e9e9eb0');
+            btnPassenger.css('border-color', '#9e9e9eb0');
+            btnPassenger.attr('disabled', true);
+            var time = 10;
+            var interval;
+            interval = setInterval(function() {
+                if (time < 1) {
+                    clearInterval(interval);
+                    btnPassenger.css('background-color', '#4caf50');
+                    btnPassenger.css('border-color', '#4caf50');
+                    btnPassenger.attr('disabled', false);
+                    btnPassenger.html('发送');
+                    if (sendResult === 1) {
+                        btnPassenger.hide();
+                        $('.spanMsg').show();
+                    }
+                    return;
+                }
+                $('.btnPassenger').html(time + 's 后重新发送');
+                time--;
+            }, 1000);
         });
     }
 
     /**
      * 预订弹出框
      */
-    var orderDialog = function() {
+    var orderDialog = function(id) {
         var form = $("#dialog-form-order").find( "form" ).on( "submit", function( event ) {
             event.preventDefault();
             orderConfirm();
@@ -267,9 +308,28 @@
 
         // 从本地缓存读取数据，设置
         var localMobile = getLocalData('passengerMobile');
+
+        // 手机号码在本地存在，表示已经预订成功过，预订成功表示该手机号已经发送过验证码，则需要隐藏发送按钮
         if (!empty(localMobile)) {
             mobile.val(localMobile);
+            $('.btnPassenger').hide();
+            $('.spanMsg').show();
         }
+
+        // 如果乘客的旧手机号不用了，换了新手机号，要保证可以正常发送验证码
+        mobile.keyup(function() {
+            var curVal = $(this).val();
+            if (curVal.length < 11 || curVal.length > 11) {
+                return;
+            }
+            if (curVal !== localMobile) {
+                $('.btnPassenger').show();
+                $('.spanMsg').hide();
+            } else {
+                $('.btnPassenger').hide();
+                $('.spanMsg').show();
+            }
+        });
 
         $("#dialog-form-order").dialog({
             //autoOpen: false,
@@ -277,9 +337,12 @@
             width: 260,
             modal: true,
             buttons: {
-                '确定': orderConfirm,
+                '确定': function () {
+                    orderConfirm(id);
+                },
                 Cancel: function() {
                     $(this).dialog( 'close' );
+                    window.location.reload();
                 }
             },
             close: function() {
@@ -293,7 +356,7 @@
     /**
      * 确认预订逻辑
      */
-    var orderConfirm = function () {
+    var orderConfirm = function (id) {
         var valid = true;
         var mobile = $('#orderMobile');
         var code = $('#orderCode');
@@ -302,8 +365,25 @@
         valid = valid && formCheckForLength( mobile, "手机号", 11, 11 );
         valid = valid && formCheckForLength( code, "验证码", 6, 6 );
         if (valid) {
-            console.log(mobile.val() + '--' + code.val());
-            setLocalData('passengerMobile', mobile.val());
+            $.ajax({
+                url: server + '/order.php',
+                type: 'post',
+                dataType: 'json',
+                async: true,
+                data: 'act=order&id=' + id + '&mobile=' + mobile.val() + '&code=' + code.val(),
+                success: function(res) {
+                    console.log("服务器返回数据："+JSON.stringify(res));
+                    // 预订成功后，写入本地缓存
+                    if(res.result === 1) {
+                        setLocalData('passengerMobile', mobile.val());
+                    }
+                    $( ".validateTips" ).text(res.msg).addClass( "ui-state-highlight" );
+                    setTimeout(function() {
+                        $( ".validateTips" ).removeClass( "ui-state-highlight", 1500 );
+                    }, 500 );
+                    //$("#dialog-form-order").dialog('close');
+                }
+            });
         }
     }
 
@@ -350,5 +430,6 @@
     setTimeout(editSeat, 500);
     setTimeout(cancelCar, 500);
     setTimeout(btnOrderClick, 100);
+    setTimeout(btnPassengerClick, 100);
 })();
 

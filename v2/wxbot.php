@@ -27,7 +27,7 @@ file_put_contents(LOG_PATH . '/wxrobot.log',
         "\r\n", FILE_APPEND);
 
 $msgObj = new MessageModel();
-$msgResult = $msgObj->getMessageList($areaTypeList[$area], '', date('Y-m-d H:i:s', strtotime('-8 hours')), $channelMapping[$area]);
+$msgResult = $msgObj->getMessageList($areaTypeList[$area], date('Y-m-d H:i:s'), date('Y-m-d H:i:s', strtotime('-8 hours')), $channelMapping[$area]);
 
 $robotMsg = [
     'rs' => 1,
