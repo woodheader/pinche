@@ -590,3 +590,9 @@ Stack trace:
 [24-Apr-2020 21:45:12 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
 [24-Apr-2020 21:45:12 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
 [24-Apr-2020 21:51:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[25-Apr-2020 11:52:58 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[25-Apr-2020 11:53:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[25-Apr-2020 11:53:17 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[25-Apr-2020 11:53:20 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[25-Apr-2020 12:09:11 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[25-Apr-2020 12:09:16 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95

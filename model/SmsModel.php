@@ -6,7 +6,7 @@
  * Time: 22:51
  */
 require_once('../core/ActiveRecord.php');
-class Sms extends ActiveRecord
+class SmsModel extends ActiveRecord
 {
     private $id;
     private $carTel;
@@ -18,6 +18,9 @@ class Sms extends ActiveRecord
 
     const STATUS_INVALID = 0;
     const STATUS_VALID = 1;
+
+    const TYPE_DRIVER = 1;
+    const TYPE_PASSENGER = 2;
 
     /**
      * 表名称
@@ -40,6 +43,7 @@ class Sms extends ActiveRecord
 `code` varchar(20) NOT NULL DEFAULT '' COMMENT '验证码',
 `expire_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态;0:无效;1:有效',
+`type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '验证码类型:(1:车主验证码;2:乘客验证码)',
 `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
 EOF;
@@ -158,7 +162,7 @@ EOF;
         if (!empty($carTel)) {
             $this->addWhere(['car_tel' => $carTel]);
         }
-        $this->addWhere(['status' => Sms::STATUS_VALID]);
+        $this->addWhere(['status' => SmsModel::STATUS_VALID]);
         $this->orderBy('update_time desc');
         $result = $this->one();
         if (empty($result)) {

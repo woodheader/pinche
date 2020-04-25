@@ -10,7 +10,7 @@ require_once('./SUBMAIL_PHP_SDK/SUBMAILAutoload.php');
 require_once('../core/common.php');
 require_once('../core/init.config.php');
 require_once(ROOT_PATH . 'core/help.class.php');
-require_once(ROOT_PATH.'model/Sms.php');
+require_once(ROOT_PATH . 'model/SmsModel.php');
 require_once(ROOT_PATH.'model/MessageModel.php');
 
 $act = empty($_REQUEST['act']) ? 'default' : $_REQUEST['act'];
@@ -35,7 +35,7 @@ switch ($act) {
             die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
         }
         // 检查手机号是否发送过验证码
-        $sms = new Sms();
+        $sms = new SmsModel();
         $smsResult = $sms->getSmsByConditions($msgResult['car_tel']);
         if (empty($smsResult)) {
             $returnArr = [
@@ -68,7 +68,7 @@ switch ($act) {
         $code = generateSmsCode();
 
         // 先保存入库
-        $sms = new Sms();
+        $sms = new SmsModel();
         $sms->setCarTel($mobile);
         // 若对应手机号已经发送过短信，并且还没有过期，就不再二次发送，节省费用
         $result = $sms->getSmsByConditions($mobile);
@@ -79,7 +79,7 @@ switch ($act) {
         }
         $sms->setCode($code);
         $sms->setExpireTime(date('Y-m-d H:i:s', strtotime('+1 year')));
-        $sms->setStatus(Sms::STATUS_VALID);
+        $sms->setStatus(SmsModel::STATUS_VALID);
         $sms->setCreateTime(date('Y-m-d H:i:s'));
         $sms->setUpdateTime(date('Y-m-d H:i:s'));
         $r = $sms->save();
@@ -107,6 +107,9 @@ switch ($act) {
         }
 
         die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
+        break;
+    case 'sendPassenger':
+
         break;
     case 'default':
     default:

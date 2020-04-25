@@ -9,7 +9,7 @@ require_once('../core/init.config.php');
 require_once(ROOT_PATH . 'core/common.php');
 require_once(ROOT_PATH.'model/MessageModel.php');
 require_once('./const/const.php');
-require_once(ROOT_PATH.'model/Sms.php');
+require_once(ROOT_PATH . 'model/SmsModel.php');
 
 $act = empty($_REQUEST['act']) ? 'default' : $_REQUEST['act'];
 $id = empty($_REQUEST['id']) ? 0 : $_REQUEST['id'];
@@ -64,7 +64,7 @@ switch ($act) {
             die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
         }
         // 检查验证码是否一致(根据手机号查询验证码，然后对比)
-        $sms = new Sms();
+        $sms = new SmsModel();
         $smsResult = $sms->getSmsByConditions($msgResult['car_tel']);
         if (empty($smsResult) || $smsResult['code'] != $code) {
             $returnArr = [
@@ -101,7 +101,7 @@ switch ($act) {
             die(json_encode($returnArr, JSON_UNESCAPED_UNICODE));
         }
         // 检查验证码是否一致(根据手机号查询验证码，然后对比)
-        $sms = new Sms();
+        $sms = new SmsModel();
         $smsResult = $sms->getSmsByConditions($msgResult['car_tel']);
         if (empty($smsResult) || $smsResult['code'] != $code) {
             $returnArr = [

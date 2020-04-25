@@ -143,8 +143,6 @@
      * 取消行程
      */
     var cancelCar = function() {
-        $('#dialog-confirm-code').hide();
-        $('#dialog-confirm-msg').hide();
         $('.btnCancel').click(function(){
             // 数据ID
             var id = $(this).parent('td').prev().html();
@@ -245,10 +243,112 @@
         });
     }
 
+    /**
+     * 点击预订按钮
+     */
+    var btnOrderClick = function () {
+        $('.btnOrder').click(function() {
+            orderDialog();
+        });
+    }
+
+    /**
+     * 预订弹出框
+     */
+    var orderDialog = function() {
+        var form = $("#dialog-form-order").find( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+            orderConfirm();
+        });
+        var tips = $( ".validateTips" );
+        var mobile = $('#orderMobile');
+        var code = $('#orderCode');
+        var allFields = $( [] ).add( mobile ).add( code );
+
+        // 从本地缓存读取数据，设置
+        var localMobile = getLocalData('passengerMobile');
+        if (!empty(localMobile)) {
+            mobile.val(localMobile);
+        }
+
+        $("#dialog-form-order").dialog({
+            //autoOpen: false,
+            height: 'auto',
+            width: 260,
+            modal: true,
+            buttons: {
+                '确定': orderConfirm,
+                Cancel: function() {
+                    $(this).dialog( 'close' );
+                }
+            },
+            close: function() {
+                form[ 0 ].reset();
+                tips.text('填写预订信息');
+                allFields.removeClass( "ui-state-error" );
+            }
+        });
+    }
+
+    /**
+     * 确认预订逻辑
+     */
+    var orderConfirm = function () {
+        var valid = true;
+        var mobile = $('#orderMobile');
+        var code = $('#orderCode');
+        var allFields = $( [] ).add( mobile ).add( code );
+        allFields.removeClass( "ui-state-error" );
+        valid = valid && formCheckForLength( mobile, "手机号", 11, 11 );
+        valid = valid && formCheckForLength( code, "验证码", 6, 6 );
+        if (valid) {
+            console.log(mobile.val() + '--' + code.val());
+            setLocalData('passengerMobile', mobile.val());
+        }
+    }
+
+    /**
+     * 表单验证逻辑 - 长度验证
+     */
+    var formCheckForLength = function (o, n, min, max) {
+        var tips = $( ".validateTips" );
+        if ( o.val().length > max || o.val().length < min ) {
+            o.addClass( "ui-state-error" );
+            tips
+                .text( n + " 必须是 " + min + '位。')
+                .addClass( "ui-state-highlight" );
+            setTimeout(function() {
+                tips.removeClass( "ui-state-highlight", 1500 );
+            }, 500 );
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 从本地获取和设置数据
+     */
+    var getLocalData = function (key) {
+        return localStorage.getItem(key);
+    }
+    var setLocalData = function (key, val) {
+        localStorage.setItem(key, val);
+    }
+
+    /**
+     * 判断值是否为空
+     */
+    var empty = function (val) {
+        return val === '' || val === undefined || val === null || val === 'undefined';
+    }
+
+
     setTimeout(showImg, 1000);
     setTimeout(copyWords, 500);
     setTimeout(carBuy, 500);
     setTimeout(editSeat, 500);
     setTimeout(cancelCar, 500);
+    setTimeout(btnOrderClick, 100);
 })();
 

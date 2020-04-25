@@ -118,24 +118,42 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
             $trHtml .= '<div class="div-msg-left">联系方式:</div><div class="div-msg-right"><a href="tel://'.$msg['car_tel'].'">'.help::replaceWithStar($msg['car_tel'],'****',3,4).'</a></div><br>';
             $trHtml .= empty($msg['car_wechat_img']) ? '' : '<div class="div-msg-left">车主微信:</div><div class="div-msg-right"><img class="qrcode" src="'.$msg['car_wechat_img'].'" width="24px" height="24px" alt="车主微信"></div><br>';
             $trHtml .= '<div class="div-msg-left">车牌信息:</div><div class="div-msg-right">'.$msg['car_license_plate'].'</div><br>';
-            $trHtml .= '<button class="btnCopy" style="cursor:pointer;">复制</button><button class="btnCancel" style="cursor:pointer;">取消</button><button class="btnOrder" style="cursor:pointer;">预定</button>';
+            $trHtml .= '<button class="btnCopy" style="cursor:pointer;">复制</button><button class="btnCancel" style="cursor:pointer;">取消</button><button class="btnOrder" style="cursor:pointer;">预订</button>';
             $trHtml .= '</td></tr>';
         }
         echo $trHtml;
     ?>
         </tbody>
     </table>
-    <div id="dialog-confirm-code" title="操作">
+    <!--验证码输入弹框-->
+    <div id="dialog-confirm-code" title="操作" style="display:none;>
         <p>
             <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
             输入验证码：<label for="code"></label><input type="text" id="code"/>
         </p>
     </div>
-    <div id="dialog-confirm-msg" title="提示">
+    <!--提示消息弹框-->
+    <div id="dialog-confirm-msg" title="提示" style="display:none;>
         <p>
             <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
             <span id="message"></span>
         </p>
+    </div>
+    <!--预订弹框-->
+    <div id="dialog-form-order" title="预订" style="display:none;">
+        <p class="validateTips">填写预订信息</p>
+        <form>
+            <fieldset>
+                <div>
+                    <label for="orderMobile">手机号</label>
+                    <input type="text" name="orderMobile" id="orderMobile" value="" class="text ui-widget-content ui-corner-all">
+                    <button class="btnPassenger" style="cursor:pointer;font-size: 12px;">发送</button>
+                </div>
+                <label for="orderCode">验证码</label>
+                <input type="text" name="orderCode" id="orderCode" value="" class="text ui-widget-content ui-corner-all">
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
     </div>
 </body>
 </html>
