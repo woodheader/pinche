@@ -59,10 +59,8 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
 <body>
     <span style="color:gray;font-size:12px;">
     为<?=$areaArr[$area]?>小伙伴们提供一个方便拼车的地方。<br/>
-
-        在公众号里发布拼车信息，比在群里更方便，发布后的消息还可以在列表中查看，需要拼车的同学可以更直观的看到信息。<br/><b style="color: #FF9800;">长按识别公众号:</b> <img class="qrcode" src="./img/ddzt.png" width="34px" height="14px" alt="车主微信"><br/>
-
-    纯为大家方便做的这么一个东西，别担心收费！<br/>
+    纯为大家方便做的这么一个东西，不收费！<br/>
+    <b style="color: #FF9800;">长按识别公众号:</b> <img class="qrcode" src="./img/ddzt.png" width="34px" height="14px" alt="车主微信"><br/>
     <?php
     if ($area == 'miyun') {
         ?>
@@ -84,16 +82,18 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
     ?>
     </span>
     <span class="mynote">
-    *注意事项：
-    车主每天最多可以发布3次行程，每次发布将会随机获得0.1元 ~ 0.5元的红包！
-    红包活动截止到2020年10月1日0点
+    车主每天最多可以发布3次行程，每次发布将会随机获得最高0.5元的红包！<br/>
+    乘客预订将百分百获得红包兑换码，可以在公众号内使用编码兑换！<br/>
+    红包活动截止到2020年10月1日0点。
     </span><br/>
     <hr />
     <div style="width:100%;padding-bottom: 10px;">
-        <div style="text-align:left;width:50%;display:inline-block;"><span style="font-size:12px;">更新时间: <?=date('Y-m-d H:i:s')?></span></div>
-        <div style="text-align:right;width:50%;display:inline-block;float:right;">
+        <div style="display:inline-block;"><span style="font-size:12px;">更新时间: <?=date('Y-m-d H:i:s')?></span></div>
+        <div style="text-align:right;display:inline-block;float:right;">
             <span class="mybutton-blue"><a href="<?=$area=='hb' ? 'http://rrd.me/gEdXs' : 'http://rrd.me/gCTsw'?>">发布行程</a></span>&nbsp;&nbsp;
+            <?php if ($area=='hb'): ?>
             <span class="mybutton"><a href="https://uri.wiki/pinche/v2/show.php?area=<?=$area=='hb' ? 'miyun' : 'hb'?>"><?=$area=='hb' ? '密云' : '河北'?>拼车</a></span>
+            <?php endif; ?>
         </div>
     </div>
     <table class="statistics-table">
@@ -110,15 +110,21 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
             $carPrice = $priceMapping[$msg['car_price']];
             $trHtml .= '<tr><td>'.$msg['id'].'</td>';
             $trHtml .= '<td>';
-            $trHtml .= '<div class="div-msg-left">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期:</div><div class="div-msg-right">'.$msg['car_time'].'</div><br>';
-            $trHtml .= '<div class="div-msg-left">方&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;向:</div><div class="div-msg-right"><span style="color:'.$color.';font-weight:bold;">'.$goto.'</span></div><br>';
-            $trHtml .= '<div class="div-msg-left">行驶路线:</div><div class="div-msg-right">'.$msg['car_line'].'</div><br>';
-            $trHtml .= '<div class="div-msg-left">座&nbsp;&nbsp;位&nbsp;&nbsp;数:</div><div class="div-msg-right allow-edit" contenteditable="true">'.$msg['car_seatnum'].'位'.($msg['car_seatnum'] <= 0 ? '<b style="color: red;">(车满)</b>' : '').'</div><br>';
-            $trHtml .= '<div class="div-msg-left">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价:</div><div class="div-msg-right">'.$carPrice.'</div><br>';
-            $trHtml .= '<div class="div-msg-left">联系方式:</div><div class="div-msg-right"><a href="tel://'.$msg['car_tel'].'">'.help::replaceWithStar($msg['car_tel'],'****',3,4).'</a></div><br>';
-            $trHtml .= empty($msg['car_wechat_img']) ? '' : '<div class="div-msg-left">车主微信:</div><div class="div-msg-right"><img class="qrcode" src="'.$msg['car_wechat_img'].'" width="24px" height="24px" alt="车主微信"></div><br>';
-            $trHtml .= '<div class="div-msg-left">车牌信息:</div><div class="div-msg-right">'.$msg['car_license_plate'].'</div><br>';
-            $trHtml .= '<button class="btnCopy" style="cursor:pointer;">复制</button><button class="btnCancel" style="cursor:pointer;">取消</button><button class="'.($msg['car_seatnum'] <= 0 ? 'btnOrderFull' : 'btnOrder').'" style="cursor:pointer;">预订</button>';
+            $trHtml .= '<table class="inner-table" border="0" cellspacing="0" cellpadding="0">';
+            $trHtml .= '<tr><td class="inner-td-first">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期:</td><td class="inner-td-second">'.$msg['car_time'].'</td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">方&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;向:</td><td class="inner-td-second"><span style="color:'.$color.';font-weight:bold;">'.$goto.'</span></td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">行驶路线:</td><td class="inner-td-second">'.$msg['car_line'].'</td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">座&nbsp;&nbsp;位&nbsp;数:</td><td class="inner-td-second"><div class="allow-edit" contenteditable="true">'.$msg['car_seatnum'].'位'.($msg['car_seatnum'] <= 0 ? '<b style="color: red;">(车满)</b>' : '').'</div></td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价:</td><td class="inner-td-second">'.$carPrice.'</td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">联系方式:</td><td class="inner-td-second"><a href="tel://'.$msg['car_tel'].'">'.help::replaceWithStar($msg['car_tel'],'****',3,4).'</a></td></tr>';
+            $trHtml .= empty($msg['car_wechat_img']) ? '' : '<tr><td class="inner-td-first">车主微信:</td><td class="inner-td-second"><img class="qrcode" src="'.$msg['car_wechat_img'].'" width="24px" height="24px" alt="车主微信"></td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">车牌信息:</td><td class="inner-td-second">'.$msg['car_license_plate'].'</td></tr>';
+            $trHtml .= '<tr><td class="inner-td-colspan" colspan="2">
+                                <button class="'.($msg['car_seatnum'] <= 0 ? 'btnOrderFull' : 'btnOrder').'" style="cursor:pointer;">预订</button>
+                                <button class="btnCancel" style="cursor:pointer;">取消</button>
+                                <button class="btnCopy" style="cursor:pointer;">复制</button>
+                                </td></tr>';
+            $trHtml .= '</table>';
             $trHtml .= '</td></tr>';
         }
         echo $trHtml;
@@ -145,13 +151,26 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
         <form>
             <fieldset>
                 <div>
-                    <label for="orderMobile">手机号</label>
+                    <label for="orderMobile" class="form-label">手机号</label>
                     <input type="text" name="orderMobile" id="orderMobile" value="" class="text ui-widget-content ui-corner-all">
                     <button class="btnPassenger" style="cursor:pointer;font-size: 12px;">发送</button>
                     <span class="spanMsg">(验证码已发送到您手机)</span>
                 </div>
-                <label for="orderCode">验证码</label>
+                <label for="orderCode" class="form-label">验证码</label>
                 <input type="text" name="orderCode" id="orderCode" value="" class="text ui-widget-content ui-corner-all">
+                <label for="passengerNum" class="form-label">乘客数</label>
+                <select name="passengerNum" id="passengerNum" class="ui-widget-content">
+                    <option value="1">1位</option>
+                    <option value="2">2位</option>
+                    <option value="3">3位</option>
+                    <option value="4">4位</option>
+                    <option value="5">5位</option>
+                    <option value="6">6位</option>
+                </select>
+                <label for="upCarAddr" class="form-label">上车地点</label>
+                <input type="text" name="upCarAddr" id="upCarAddr" value="" class="text ui-widget-content ui-corner-all">
+                <label for="downCarAddr" class="form-label">下车地点</label>
+                <input type="text" name="downCarAddr" id="downCarAddr" value="" class="text ui-widget-content ui-corner-all">
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
         </form>

@@ -4,7 +4,7 @@
     var $ = $ || window.$;
 
     var server = 'https://uri.wiki/pinche/v2';
-    server = 'http://localhost/pinche/v2';
+    //server = 'http://localhost/pinche/v2';
 
     /**
 	 * 图片浮现
@@ -19,43 +19,42 @@
      */
     var copyWords = function() {
         var tdHtml = '';
+
         $('.btnCopy').click(function(){
-            tdHtml = $(this).parent().html();
-            var aObj = $(this).parent().find('a');
-            var aObjOuterHtml = aObj.prop("outerHTML");
-            var newAObjOuterHtml = aObjOuterHtml.replace('>'+aObj.html()+'<', '>'+aObj.attr('href').replace('tel://', '')+'<');
-            tdHtml = tdHtml.replace(aObjOuterHtml, newAObjOuterHtml);
-            var imgObj = $(this).parent().find('img').first();
-            var btnObj1 = $(this).parent().find('button').first();
-            var btnObj2 = $(this).parent().find('button').last();
-            tdHtml = replaceFunc(tdHtml, '<div class="div-msg-left">', '');
-            tdHtml = replaceFunc(tdHtml, '<div class="div-msg-right">', '');
-            tdHtml = replaceFunc(tdHtml, '<div class="div-msg-right allow-edit" contenteditable="true">', '');
-            tdHtml = replaceFunc(tdHtml, '</div>', '');
-            tdHtml = replaceFunc(tdHtml, '<b>', '');
-            tdHtml = replaceFunc(tdHtml, '</b>', '');
-            tdHtml = replaceFunc(tdHtml, '<br>', '\r\n');
-            tdHtml = replaceFunc(tdHtml, '<span style="color:red;font-weight:bold;">', '');
-            tdHtml = replaceFunc(tdHtml, '<span style="color:green;font-weight:bold;">', '');
-            tdHtml = replaceFunc(tdHtml, '</span>', '');
-            tdHtml = replaceFunc(tdHtml, newAObjOuterHtml, aObj.attr('href').replace('tel://', ''));
-            if (imgObj.prop("outerHTML") !== undefined) {
-                tdHtml = replaceFunc(tdHtml, imgObj.prop("outerHTML"), aObj.attr('href').replace('tel://', ''));
+            var tableObj = $(this).parent('td').parent('tr').parent('tbody').parent('table');
+            var date = tableObj.find('tr').eq(0).find('td').eq(1).html();
+            var goto = tableObj.find('tr').eq(1).find('td').eq(1).html();
+            var line = tableObj.find('tr').eq(2).find('td').eq(1).html();
+            var seat = tableObj.find('tr').eq(3).find('td').eq(1).html();
+            var price = tableObj.find('tr').eq(4).find('td').eq(1).html();
+            var mobile = tableObj.find('tr').eq(5).find('td').eq(1).children('a').attr('href').replace('tel://', '');
+            var chepai = tableObj.find('tr').eq(6).find('td').eq(1).html();
+            if (chepai.indexOf('img') !== -1) {
+                chepai = tableObj.find('tr').eq(7).find('td').eq(1).html();
             }
-            tdHtml = replaceFunc(tdHtml, btnObj1.prop("outerHTML"), '');
-            tdHtml = replaceFunc(tdHtml, btnObj2.prop("outerHTML"), '');
-            tdHtml = replaceFunc(tdHtml, '&nbsp;', '');
+            tdHtml = '日期:' + date + '\r\n';
+            tdHtml += '方向:' + goto + '\r\n';
+            tdHtml += '路线:' + line + '\r\n';
+            tdHtml += '座位数:' + seat + '\r\n';
+            tdHtml += '单价:' + price + '\r\n';
+            tdHtml += '联系方式:' + mobile + '\r\n';
+            tdHtml += '车牌信息:' + chepai + '\r\n';
+            tdHtml = replaceFunc(tdHtml, '<span style="color:green;font-weight:bold;">', '');
+            tdHtml = replaceFunc(tdHtml, '<span style="color:red;font-weight:bold;">', '');
+            tdHtml = replaceFunc(tdHtml, '<div class="allow-edit" contenteditable="true">', '');
+            tdHtml = replaceFunc(tdHtml, '</span>', '');
+            tdHtml = replaceFunc(tdHtml, '</div>', '');
         });
 
         var clipboard = new ClipboardJS('.btnCopy',{
             text: function(trigger){
                 var href = window.location.href;
                 if (href.indexOf('miyun') != -1) {
-                    href = 'http://rrd.me/gDTFw';
+                    href = 'https://uri.wiki/zbz9yL';
                 } else {
-                    href = 'http://rrd.me/gDTF4';
+                    href = 'https://uri.wiki/ePGGGC';
                 }
-                tdHtml = tdHtml + '\r\n点击查看更多车主行程: ' + href;
+                tdHtml = '【车找人】\r\n' + tdHtml + '\r\n更多车主行程: ' + href;
                 console.log(''+tdHtml);
                 return tdHtml;
             }});
@@ -110,10 +109,11 @@
     var editSeat = function () {
         var seatNum = 0;
         $('.allow-edit').on('blur', function() {
+            var obj = $(this);
             // 数据ID
-            var id = $(this).parent('td').prev().html();
+            var id = getId(obj);
             // 手机号
-            var mobile = $(this).parent('td').find('a').html();
+            var mobile = getDriveStarMobile(obj);
             var divContent = $(this).html().replace(/<\/?[^>]*>/g, '').replace(/[ ]/g,'').replace(/[\r\n]/g,'');
             seatNum = $.trim(divContent).substr(0,1);
             if (seatNum > 6) {
@@ -130,7 +130,7 @@
                 smsCodeDialog('调整座位','update',id,seatNum);
             } else {
                 let otherData = {
-                    'mobile': mobile,
+                    'mobile': getDriverMobile(obj),
                     'title': '调整座位',
                     'action': 'update',
                     'dataId': id,
@@ -143,21 +143,43 @@
     }
 
     /**
+     * 获取数据ID
+     */
+    var getId = function (obj) {
+        return obj.parent('td').parent('tr').parent('tbody').parent('table').parent('td').prev().html();
+    }
+
+    /**
+     * 获取车主星号手机号
+     */
+    var getDriveStarMobile = function (obj) {
+        return obj.parent('td').parent('tr').parent('tbody').find('tr').eq(5).find('a').html();
+    }
+
+    /**
+     * 获取车主手机号
+     */
+    var getDriverMobile = function (obj) {
+        return obj.parent('td').parent('tr').parent('tbody').find('tr').eq(5).find('a').attr('href').replace('tel://', '');
+    }
+
+    /**
      * 取消行程
      */
     var cancelCar = function() {
         $('.btnCancel').click(function(){
+            var obj = $(this);
             // 数据ID
-            var id = $(this).parent('td').prev().html();
+            var id = getId(obj);
             // 手机号
-            var mobile = $(this).parent('td').find('a').html();
+            var mobile = getDriveStarMobile(obj);
             // 查询历史发送状态
             var isSend = validateIsSend(id);
             if (isSend === 1) {
                 smsCodeDialog('取消行程','cancel',id,0);
             } else {
                 let otherData = {
-                    'mobile': mobile,
+                    'mobile': getDriverMobile(obj),
                     'title': '取消行程',
                     'action': 'cancel',
                     'dataId': id,
@@ -252,7 +274,7 @@
     var btnOrderClick = function () {
         $('.btnOrder').click(function() {
             // 数据ID
-            var id = $(this).parent('td').prev().html();
+            var id = getId($(this));
             orderDialog(id);
         });
     }
@@ -272,7 +294,7 @@
             btnPassenger.css('background-color', '#9e9e9eb0');
             btnPassenger.css('border-color', '#9e9e9eb0');
             btnPassenger.attr('disabled', true);
-            var time = 10;
+            var time = 30;
             var interval;
             interval = setInterval(function() {
                 if (time < 1) {
@@ -299,7 +321,7 @@
     var orderDialog = function(id) {
         var form = $("#dialog-form-order").find( "form" ).on( "submit", function( event ) {
             event.preventDefault();
-            orderConfirm();
+            orderConfirm(id);
         });
         var tips = $( ".validateTips" );
         var mobile = $('#orderMobile');
@@ -340,7 +362,7 @@
                 '确定': function () {
                     orderConfirm(id);
                 },
-                Cancel: function() {
+                '取消': function() {
                     $(this).dialog( 'close' );
                     window.location.reload();
                 }
@@ -360,17 +382,24 @@
         var valid = true;
         var mobile = $('#orderMobile');
         var code = $('#orderCode');
-        var allFields = $( [] ).add( mobile ).add( code );
+        var passengerNum = $('#passengerNum');
+        console.log(passengerNum.val());
+        var upCarAddr = $('#upCarAddr');
+        var downCarAddr = $('#downCarAddr');
+        var allFields = $( [] ).add( mobile ).add( code ).add( passengerNum ).add( upCarAddr ).add( downCarAddr );
         allFields.removeClass( "ui-state-error" );
         valid = valid && formCheckForLength( mobile, "手机号", 11, 11 );
         valid = valid && formCheckForLength( code, "验证码", 6, 6 );
+        valid = valid && formCheckForLength( passengerNum, "乘客数", 1, 1 );
+        valid = valid && formCheckForLength( upCarAddr, "上车地点", 2, 10 );
+        valid = valid && formCheckForLength( downCarAddr, "下车地点", 2, 10 );
         if (valid) {
             $.ajax({
                 url: server + '/order.php',
                 type: 'post',
                 dataType: 'json',
                 async: true,
-                data: 'act=order&id=' + id + '&mobile=' + mobile.val() + '&code=' + code.val(),
+                data: 'act=order&id=' + id + '&mobile=' + mobile.val() + '&code=' + code.val() + '&passengerNum=' + passengerNum.val() + '&upCarAddr='+upCarAddr.val()+'&downCarAddr='+downCarAddr.val(),
                 success: function(res) {
                     console.log("服务器返回数据："+JSON.stringify(res));
                     // 预订成功后，写入本地缓存
@@ -394,8 +423,12 @@
         var tips = $( ".validateTips" );
         if ( o.val().length > max || o.val().length < min ) {
             o.addClass( "ui-state-error" );
+            var words = n + " 必须是 " + min + '位。';
+            if(max > min) {
+                words = n + " 最小 " + min + ' 位，最大 ' + max + ' 位。';
+            }
             tips
-                .text( n + " 必须是 " + min + '位。')
+                .text( words)
                 .addClass( "ui-state-highlight" );
             setTimeout(function() {
                 tips.removeClass( "ui-state-highlight", 1500 );

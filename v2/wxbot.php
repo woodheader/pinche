@@ -27,7 +27,7 @@ file_put_contents(LOG_PATH . '/wxrobot.log',
         "\r\n", FILE_APPEND);
 
 $msgObj = new MessageModel();
-$msgResult = $msgObj->getMessageList($areaTypeList[$area], date('Y-m-d H:i:s'), date('Y-m-d H:i:s', strtotime('-8 hours')), $channelMapping[$area]);
+$msgResult = $msgObj->getMessageList($areaTypeList[$area], date('Y-m-d H:i:s'), '', $channelMapping[$area]);
 
 $robotMsg = [
     'rs' => 1,
@@ -46,14 +46,14 @@ if (!empty($msgResult)) {
         $carPrice = $priceMapping[$msgObj['car_price']];
         $contentList[] = $msgTitle[0].' '.$msgObj['car_time'];
         $contentList[] = $msgTitle[1].' '.$goto;
-        $contentList[] = $msgTitle[2].' '.$msgObj['car_line'];
+        $contentList[] = $msgTitle[2].' '.str_replace("\\n", '', $msgObj['car_line']);
         $contentList[] = $msgTitle[3].' '.$msgObj['car_seatnum'];
         $contentList[] = $msgTitle[4].' '.$carPrice;
         $contentList[] = $msgTitle[5].' '.$msgObj['car_tel'];
         $contentList[] = $msgTitle[6].' '.$msgObj['car_license_plate'];
         $contentList[] = '======================';
     }
-    $contentList[] = '点击查看更多车主行程: '.($area=='hb' ? 'http://rrd.me/gDTF4' : 'http://rrd.me/gDTFw');
+    $contentList[] = '点击查看更多车主行程: '.($area=='hb' ? 'https://uri.wiki/ePGGGC' : 'https://uri.wiki/zbz9yL');
     if (!empty($contentList)) {
         $robotMsg['content'] = implode("\\n", $contentList);
         $robotMsg['sendtime'] = strtotime(date('Y-m-d H:i:s', strtotime('+20 seconds')));

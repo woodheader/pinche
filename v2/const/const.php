@@ -23,6 +23,10 @@ $channelMapping = [
     'miyun' => 1,
     'hb' => 2
 ];
+$channelMappingForKey = [
+    1 => 'miyun',
+    2 => 'hb',
+];
 $msgTitle = [
    '日期:', '方向:', '行驶路线:', '座位数:', '单价:', '联系方式:', '车牌信息:'
 ];

@@ -632,3 +632,114 @@ Stack trace:
 [25-Apr-2020 23:12:24 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
 [25-Apr-2020 23:36:34 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
 [25-Apr-2020 23:39:36 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[26-Apr-2020 05:18:10 UTC] PHP Fatal error:  Class 'ActiveRecord' not found in /code/php/pinche/model/ShortUrlModel.php on line 9
+[26-Apr-2020 13:18:40 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:40 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:40 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:40 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:43 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:43 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:43 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:18:43 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:21:42 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Call to undefined function shorurl() in /code/php/pinche/v2/url.php:27
+Stack trace:
+#0 {main}
+  thrown in /code/php/pinche/v2/url.php on line 27
+[26-Apr-2020 13:22:16 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:22:16 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:22:16 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:22:16 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 93
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:23:36 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 92
+[26-Apr-2020 13:36:48 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 81
+[26-Apr-2020 13:37:24 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /code/php/pinche/core/common.php on line 81
+[26-Apr-2020 15:59:27 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[26-Apr-2020 16:00:28 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[26-Apr-2020 16:01:50 Asia/Shanghai] PHP Notice:  Undefined index: token in /code/php/pinche/v2/show.php on line 14
+[26-Apr-2020 17:38:21 Asia/Shanghai] PHP Notice:  Undefined index: result in /code/php/pinche/core/help.class.php on line 444
+[26-Apr-2020 17:38:21 Asia/Shanghai] PHP Notice:  Undefined index: result in /code/php/pinche/core/help.class.php on line 445
+[26-Apr-2020 17:38:21 Asia/Shanghai] PHP Notice:  Undefined index: result in /code/php/pinche/core/help.class.php on line 446
+[26-Apr-2020 17:38:21 Asia/Shanghai] PHP Notice:  Undefined index: result in /code/php/pinche/core/help.class.php on line 447
+[26-Apr-2020 17:38:21 Asia/Shanghai] PHP Notice:  Undefined index: result in /code/php/pinche/core/help.class.php on line 448
+[29-Apr-2020 15:36:26 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:26 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:45 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:45 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:46 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:46 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:47 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:47 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:47 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:47 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:56 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:56 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:57 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:57 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:57 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:57 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:58 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:58 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:58 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:58 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:59 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:59 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:36:59 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:36:59 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:37:00 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:37:00 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 104
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[29-Apr-2020 15:37:01 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[30-Apr-2020 00:01:46 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[30-Apr-2020 00:01:46 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[30-Apr-2020 00:02:42 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[30-Apr-2020 00:02:42 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[30-Apr-2020 22:49:51 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[30-Apr-2020 22:49:51 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[30-Apr-2020 22:50:21 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[30-Apr-2020 22:50:21 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[30-Apr-2020 22:50:22 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[30-Apr-2020 22:50:22 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[30-Apr-2020 22:50:23 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[01-May-2020 13:49:18 Asia/Shanghai] PHP Notice:  Undefined variable: rows in /code/php/pinche/core/mysql.class.php on line 89
+[01-May-2020 13:49:18 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/v2/show.php on line 106
+[01-May-2020 14:00:54 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[01-May-2020 14:01:35 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[01-May-2020 14:11:36 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[01-May-2020 14:11:36 Asia/Shanghai] PHP Warning:  Invalid argument supplied for foreach() in /code/php/pinche/core/mysql.class.php on line 95
+[01-May-2020 14:13:21 Asia/Shanghai] PHP Notice:  Undefined index: token in /code/php/pinche/v2/show.php on line 14

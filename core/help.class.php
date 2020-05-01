@@ -125,9 +125,32 @@ class help {
             $onlineip=getenv('REMOTE_ADDR');
         }elseif (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] and strcasecmp($_SERVER['REMOTE_ADDR'],'unknown')) {
             $onlineip=$_SERVER['REMOTE_ADDR'];
+        } else{
+            $onlineip = 'unknown';
         }
         preg_match("/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/",$onlineip,$match);
         return $onlineip = $match[0] ? $match[0] : 'unknown';
+    }
+
+    public static function getIpAddr() {
+        if (isset($_SERVER)){
+            if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
+                $realip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+            } else if (isset($_SERVER["HTTP_CLIENT_IP"])) {
+                $realip = $_SERVER["HTTP_CLIENT_IP"];
+            } else {
+                $realip = $_SERVER["REMOTE_ADDR"];
+            }
+        } else {
+            if (getenv("HTTP_X_FORWARDED_FOR")){
+                $realip = getenv("HTTP_X_FORWARDED_FOR");
+            } else if (getenv("HTTP_CLIENT_IP")) {
+                $realip = getenv("HTTP_CLIENT_IP");
+            } else {
+                $realip = getenv("REMOTE_ADDR");
+            }
+        }
+        return $realip;
     }
 
     static function request_url()
@@ -248,6 +271,120 @@ class help {
             return '';
         }
         return substr_replace($oldStr,$replaceStr,$start,$length);
+    }
+
+    public static function getOsInfo() {
+        if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+            $OS = $_SERVER['HTTP_USER_AGENT'];
+            if (preg_match('/win/i', $OS)) {
+                $OS = 'Windows';
+            } elseif (preg_match('/mac/i', $OS)) {
+                $OS = 'MAC';
+            } elseif (preg_match('/linux/i', $OS)) {
+                $OS = 'Linux';
+            } elseif (preg_match('/unix/i', $OS)) {
+                $OS = 'Unix';
+            } elseif (preg_match('/bsd/i', $OS)) {
+                $OS = 'BSD';
+            } else {
+                $OS = 'Other';
+            }
+            return $OS;
+        } else {
+            return 'error';
+        }
+    }
+
+
+    public static function getBrowserInfo() {
+        if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+            $br = $_SERVER['HTTP_USER_AGENT'];
+            if (preg_match('/MSIE/i', $br)) {
+                $br = 'MSIE';
+            } elseif (preg_match('/Firefox/i', $br)) {
+                $br = 'Firefox';
+            } elseif (preg_match('/Chrome/i', $br)) {
+                $br = 'Chrome';
+            } elseif (preg_match('/Safari/i', $br)) {
+                $br = 'Safari';
+            } elseif (preg_match('/Opera/i', $br)) {
+                $br = 'Opera';
+            } else {
+                $br = 'Other';
+            }
+            return $br;
+        } else {
+            return "error";
+        }
+    }
+
+    public static function getBrowserLang() {
+        if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+            $lang = substr($lang, 0, 5);
+            if (preg_match("/zh-cn/i", $lang)) {
+                $lang = "简体中文";
+            } elseif (preg_match("/zh/i", $lang)) {
+                $lang = "繁体中文";
+            } else {
+                $lang = "English";
+            }
+            return $lang;
+        } else {
+            return "error";
+        }
+    }
+
+    public static function getLocation($ip = '') {
+        empty($ip) && $ip = self::getIpAddr();
+        if ($ip == "127.0.0.1") return "本机地址";
+        $api = "http://apis.map.qq.com/ws/location/v1/ip?ip=$ip&key=3IPBZ-7BSCP-EFIDB-LWNOK-FINDQ-HRFCT";   //请求腾讯ip地址库
+        $json = @file_get_contents($api);
+        $arr = json_decode($json, true);
+        if ($arr['status'] != 0) {
+            return '';
+        }
+        $country = $arr['result']['ad_info']['nation'];
+        $province = $arr['result']['ad_info']['province'];
+        $city = $arr['result']['ad_info']['city'];
+        $district = $arr['result']['ad_info']['district'];
+        $adcode = $arr['result']['ad_info']['adcode'];
+        if ((string)$country == '中国') {
+            if ((string)($province) != (string)$city) {
+                $_location = $province .'-'. $city .'-'. $district . ','. $adcode;
+            } else {
+                $_location = $country .'-'. $city .'-'. $district . ','. $adcode;
+            }
+        } else {
+            $_location = $country;
+        }
+        return $_location;
+    }
+
+
+    /**
+     * 获取用户设备信息
+     */
+    public static function getEqu() {
+        $agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        if (stristr($agent, 'iPad')) {
+            $fb_fs = "iPad";
+        } else if (preg_match('/Android (([0-9_.]{1,3})+)/i', $agent, $version)) {
+            $fb_fs = "手机(Android " . $version[1] . ")";
+        } else if (stristr($agent, 'Linux')) {
+            $fb_fs = "电脑(Linux)";
+        } else if (preg_match('/iPhone OS (([0-9_.]{1,3})+)/i', $agent, $version)) {
+            $fb_fs = "手机(iPhone " . $version[1] . ")";
+        } else if (preg_match('/Mac OS X (([0-9_.]{1,5})+)/i', $agent, $version)) {
+            $fb_fs = "电脑(OS X " . $version[1] . ")";
+        } else if (preg_match('/unix/i', $agent)) {
+            $fb_fs = "Unix";
+        } else if (preg_match('/windows/i', $agent)) {
+            $fb_fs = "电脑(Windows)";
+        } else {
+            $fb_fs = "Unknown";
+        }
+        return $fb_fs;
     }
 }
 ?>
