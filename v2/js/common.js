@@ -54,7 +54,7 @@
                 } else {
                     href = 'https://uri.wiki/ePGGGC';
                 }
-                tdHtml = '【车找人】\r\n' + tdHtml + '\r\n更多车主行程: ' + href;
+                tdHtml = '【车找人】\r\n' + tdHtml + '\r\n马上预订: ' + href;
                 console.log(''+tdHtml);
                 return tdHtml;
             }});
@@ -215,6 +215,7 @@
      */
     var smsCodeDialog = function(title,act,id,seatNum) {
         $('#dialog-confirm-code').show();
+        $('#spanInputSms').show();
         $('#dialog-confirm-code').dialog({
             resizable: false,
             height: "auto",

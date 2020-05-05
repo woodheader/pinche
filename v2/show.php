@@ -24,9 +24,10 @@ if (!$isWx && $token != 'lsj') {
 
 file_put_contents(LOG_PATH . '/visiter-'.$area.'-v2.log',
     date('Y-m-d H:i:s').
-    '---'.$isWx ? '是' : '否'.
+    '---'.($isWx ? '是' : '否').
         '---'.$area.
         '---'.$clientIp.
+        '---'.help::getLocation().
         '---'.$userAgent.
         "\r\n", FILE_APPEND);
 
@@ -91,7 +92,7 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
         <div style="display:inline-block;"><span style="font-size:12px;">更新时间: <?=date('Y-m-d H:i:s')?></span></div>
         <div style="text-align:right;display:inline-block;float:right;">
             <span class="mybutton-blue"><a href="<?=$area=='hb' ? 'http://rrd.me/gEdXs' : 'http://rrd.me/gCTsw'?>">发布行程</a></span>&nbsp;&nbsp;
-            <?php if ($area=='hb'): ?>
+            <?php if ($area=='null'): ?>
             <span class="mybutton"><a href="https://uri.wiki/pinche/v2/show.php?area=<?=$area=='hb' ? 'miyun' : 'hb'?>"><?=$area=='hb' ? '密云' : '河北'?>拼车</a></span>
             <?php endif; ?>
         </div>
@@ -129,13 +130,24 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
         }
         echo $trHtml;
     ?>
+            <!--<tr>
+                <td colspan="2" align="center">
+                    <div class="adbox">
+                        <div class="adImg">
+                            <a href="https://s.click.taobao.com/bkfPMjv"><img src="img/gg-temai.jpg" class="adImg2"></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>-->
         </tbody>
     </table>
+
     <!--验证码输入弹框-->
     <div id="dialog-confirm-code" title="操作" style="display:none;>
         <p>
             <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
-            输入验证码：<label for="code"></label><input type="text" id="code"/>
+            <label for="code" class="form-label">输入验证码：</label><input type="text" id="code" class="text ui-widget-content ui-corner-all"/>
+            <span class="spanMsg" id="spanInputSms">(验证码可重复使用)</span>
         </p>
     </div>
     <!--提示消息弹框-->
@@ -154,7 +166,7 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
                     <label for="orderMobile" class="form-label">手机号</label>
                     <input type="text" name="orderMobile" id="orderMobile" value="" class="text ui-widget-content ui-corner-all">
                     <button class="btnPassenger" style="cursor:pointer;font-size: 12px;">发送</button>
-                    <span class="spanMsg">(验证码已发送到您手机)</span>
+                    <span class="spanMsg" id="spanSendSms">(验证码已发送到您手机)</span>
                 </div>
                 <label for="orderCode" class="form-label">验证码</label>
                 <input type="text" name="orderCode" id="orderCode" value="" class="text ui-widget-content ui-corner-all">

@@ -5,3 +5,4 @@
 {"status":"success","send_id":"c47b7716b280c1e219ee860be301fa96","fee":2,"sms_credits":"50","transactional_sms_credits":"958","type":"乘客预订-给司机发短信","driver":"13241977101","passenger":"13241977101"}
 {"status":"success","send_id":"8ec4d3f45ef0c33bcb723abe6127a4c2","fee":1,"sms_credits":"50","transactional_sms_credits":"957","type":"司机确认-给乘客发短信","driver":"13241977101","passenger":"13241977101"}
 {"status":"error","code":409,"msg":"This SMS project is being reviewed, please try again later.","type":"司机确认-给乘客发短信","driver":"13241977101","passenger":"13241977101"}
+{"status":"success","send_id":"353495913bdecfd583df250c3df04d7a","fee":1,"sms_credits":"50","transactional_sms_credits":"953","type":"司机确认-给乘客发短信","driver":"13241977101","passenger":"13241977101"}

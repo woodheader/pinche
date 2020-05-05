@@ -20,7 +20,7 @@ $clientIp = help::getip();
 
 file_put_contents(LOG_PATH . '/wxrobot.log',
     date('Y-m-d H:i:s').
-    '---'.$isWx ? '是' : '否'.
+    '---'.($isWx ? '是' : '否').
         '---'.$robotid.'---'.$gid.'---'.$skw.
         '---'.$clientIp.
         '---'.$userAgent.
@@ -53,7 +53,7 @@ if (!empty($msgResult)) {
         $contentList[] = $msgTitle[6].' '.$msgObj['car_license_plate'];
         $contentList[] = '======================';
     }
-    $contentList[] = '点击查看更多车主行程: '.($area=='hb' ? 'https://uri.wiki/ePGGGC' : 'https://uri.wiki/zbz9yL');
+    $contentList[] = '马上预订: '.($area=='hb' ? 'https://uri.wiki/ePGGGC' : 'https://uri.wiki/zbz9yL');
     if (!empty($contentList)) {
         $robotMsg['content'] = implode("\\n", $contentList);
         $robotMsg['sendtime'] = strtotime(date('Y-m-d H:i:s', strtotime('+20 seconds')));
