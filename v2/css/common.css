@@ -1,3 +1,6 @@
+.hd {
+  text-align: left;
+}
 .statistics-table{
   position: absolute;
   border-collapse: collapse;
@@ -11,7 +14,6 @@
 .statistics-table td{
   border: 1px solid #dfddd9;
   height: 50px;
-  text-align: left;
   padding: 0 10px;
 }
 .statistics-table.fixed-table{
@@ -87,7 +89,7 @@
   color: #ffffff;
 }
 .statistics-table .seq{
-  width: 10%;
+  width: 12%;
   min-width: 34px;
   background: #2c96f2;
 }
@@ -150,9 +152,9 @@
 }
 
 .mynote {
-  color:red;
-  font-weight:bold;
-  font-size:14px;
+  color:#ff5722;
+  font-weight:normal;
+  font-size:12px;
 }
 
 .btnCopy {
@@ -162,7 +164,6 @@
   color: #fff;
   margin-right: 6px;
   border-color: #607D8B;
-  float: right;
 }
 
 .btnCancel {
@@ -172,7 +173,6 @@
   color: #fff;
   margin-right: 6px;
   border-color: #795548;
-  float: right;
 }
 
 .btnOrder {
@@ -182,22 +182,34 @@
   color: #fff;
   margin-right: 6px;
   border-color: #4caf50;
+}
+
+.btnOrderFull {
+  cursor: pointer;
+  background-color: #9e9e9ea8;
+  border-radius: 6px;
+  color: #fff;
+  margin-right: 6px;
+  border-color: #9e9e9ea8;
   float: right;
 }
 
 .spanMsg {
-
+  font-size: 8px;
+  color: red;
+  display: none;
+  float: right;
 }
 
 .div-msg-left {
   width:28%;
-  float:left;
   margin-right: -4px;
+  display: inline-block;
 }
 
 .div-msg-right {
   width:72%;
-  float:left;
+  display: inline-block;
 }
 
 .btnPassenger {
@@ -210,13 +222,60 @@
   float: right;
 }
 
-/** dialog弹出框样式 **/
+.inner-table {
+  width: 106%;
+  border: none;
+  padding: 0px;
+  margin-left: -10px;
+}
+
+.inner-table td {
+  border: none;
+  height: 20px;
+}
+
+.inner-td-first {
+  padding: 0px;
+  width: 26%;
+}
+
+.inner-td-second {
+  padding-left: 4px;
+  width: 74%;
+}
+
+.inner-td-colspan {
+  text-align: right;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 12px;
+}
+
+.adImg {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+}
+.adImg2 {
+  position:absolute;
+  left: 0;
+  top: 0;
+  width:100%;
+}
+
+  /** dialog弹出框样式 **/
 label, input { display:block; }
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
-fieldset { padding:0; border:0; margin-top:25px; }
+select { margin-bottom:12px; width:98%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:20px; }
 h1 { font-size: 1.2em; margin: .6em 0; }
 div#users-contain { width: 350px; margin: 20px 0; }
 div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
 div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
 .ui-dialog .ui-state-error { padding: .3em; }
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
+.validateTips { border: 1px solid transparent; padding: 0.3em; font-size: 12px;}

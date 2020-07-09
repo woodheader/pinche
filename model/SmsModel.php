@@ -9,18 +9,23 @@ require_once('../core/ActiveRecord.php');
 class SmsModel extends ActiveRecord
 {
     private $id;
-    private $carTel;
+    private $mobile;
     private $code;
     private $expireTime;
     private $status;
     private $createTime;
     private $updateTime;
+    private $type;
 
     const STATUS_INVALID = 0;
     const STATUS_VALID = 1;
 
     const TYPE_DRIVER = 1;
     const TYPE_PASSENGER = 2;
+
+    const TYPE_ARR = [
+        self::TYPE_DRIVER, self::TYPE_PASSENGER
+    ];
 
     /**
      * 表名称
@@ -39,7 +44,7 @@ class SmsModel extends ActiveRecord
     {
         return <<<EOF
 `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-`car_tel` varchar(100) NOT NULL DEFAULT '' COMMENT '车主电话',
+`mobile` varchar(100) NOT NULL DEFAULT '' COMMENT '车主电话',
 `code` varchar(20) NOT NULL DEFAULT '' COMMENT '验证码',
 `expire_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态;0:无效;1:有效',
@@ -65,12 +70,12 @@ EOF;
         return $this->id;
     }
 
-    public function getCarTel() {
-        return $this->carTel;
+    public function getMobile() {
+        return $this->mobile;
     }
 
-    public function setCarTel($carTel) {
-        $this->carTel = $carTel;
+    public function setMobile($mobile) {
+        $this->mobile = $mobile;
     }
 
     public function setCode($code)
@@ -151,16 +156,35 @@ EOF;
     }
 
     /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $updateTime
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
      * 数据查询
      *
      * @return array
      */
-    public function getSmsByConditions($carTel) {
-        if (empty($carTel)) {
+    public function getSmsByConditions($mobile = '', $type = 0) {
+        if (empty($mobile) || empty($type)) {
             return [];
         }
-        if (!empty($carTel)) {
-            $this->addWhere(['car_tel' => $carTel]);
+        if (!empty($mobile)) {
+            $this->addWhere(['mobile' => $mobile]);
+        }
+        if (!empty($type)) {
+            $this->addWhere(['type' => $type]);
         }
         $this->addWhere(['status' => SmsModel::STATUS_VALID]);
         $this->orderBy('update_time desc');

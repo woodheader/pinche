@@ -48,6 +48,7 @@ $answerFieldMapping = [
     '单价' => 'car_price',
     '联系方式' => 'car_tel',
     '车主微信' => 'car_wechat_img',
+    '收款码' => 'car_pay_img',
     '车牌信息' => 'car_license_plate',
 ];
 
@@ -67,7 +68,7 @@ $priceHbArr = [
     '6' => '999',
 ];
 
-function downloadImg($imgSrc, $mobile) {
+function downloadImg($imgSrc, $mobile, $type = 1) {
 
     //$host = 'http://localhost';
     $host = 'https://uri.wiki';
@@ -76,17 +77,19 @@ function downloadImg($imgSrc, $mobile) {
         return $host.'/pinche/v2/img/qrcode.png';
     }
 
-    $target = './img/userqr/'.$mobile.'.png';
+    $path = ($type == 2 ? 'payqr' : 'userqr');
+
+    $target = './img/'.$path.'/'.$mobile.'.png';
 
     // 验证手机号对应的图片是否存在
     if (file_exists($target)) {
-        return $host.'/pinche/v2/img/userqr/'.$mobile.'.png';
+        return $host.'/pinche/v2/img/'.$path.'/'.$mobile.'.png';
     }
 
     $img = file_get_contents($imgSrc);
     file_put_contents($target, $img);
 
-    return $host.'/pinche/v2/img/userqr/'.$mobile.'.png';
+    return $host.'/pinche/v2/img/'.$path.'/'.$mobile.'.png';
 }
 
 
@@ -109,9 +112,12 @@ foreach($jsonObj->result->participants as $formData) {
                             $insertData[$answerFieldMapping[$filedLabel]] = $insertData[$answerFieldMapping[$filedLabel]].' '.$fieldValue. ':00';
                         } elseif (strpos($filedLabel, '微信') !== false) {
                             $wechatImgLink = $answerData->fieldValueArr[0]->url;
-                            $insertData[$answerFieldMapping[$filedLabel]] = downloadImg($wechatImgLink, $insertData['car_tel']);
+                            $insertData[$answerFieldMapping[$filedLabel]] = downloadImg($wechatImgLink, $insertData['car_tel'], 1);
                         } elseif (strpos($filedLabel, '单价') !== false) {
                             $insertData[$answerFieldMapping[$filedLabel]] = $channel == 1 ? $priceArr[$fieldValue] : $priceHbArr[$fieldValue];
+                        } elseif (strpos($filedLabel, '收款码') !== false) {
+                            $payImgLink = $answerData->fieldValueArr[0]->url;
+                            $insertData[$answerFieldMapping[$filedLabel]] = downloadImg($payImgLink, $insertData['car_tel'], 2);
                         } else {
                             $insertData[$answerFieldMapping[$filedLabel]] = $fieldValue;
                         }

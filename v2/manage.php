@@ -65,7 +65,7 @@ switch ($act) {
         }
         // 检查验证码是否一致(根据手机号查询验证码，然后对比)
         $sms = new SmsModel();
-        $smsResult = $sms->getSmsByConditions($msgResult['car_tel']);
+        $smsResult = $sms->getSmsByConditions($msgResult['car_tel'], SmsModel::TYPE_DRIVER);
         if (empty($smsResult) || $smsResult['code'] != $code) {
             $returnArr = [
                 'result' => 0,
@@ -102,7 +102,7 @@ switch ($act) {
         }
         // 检查验证码是否一致(根据手机号查询验证码，然后对比)
         $sms = new SmsModel();
-        $smsResult = $sms->getSmsByConditions($msgResult['car_tel']);
+        $smsResult = $sms->getSmsByConditions($msgResult['car_tel'],SmsModel::TYPE_DRIVER);
         if (empty($smsResult) || $smsResult['code'] != $code) {
             $returnArr = [
                 'result' => 0,

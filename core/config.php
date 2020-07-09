@@ -1,5 +1,5 @@
 <?php
-$dbhost   = "192.168.2.198";
+$dbhost   = "192.168.1.100";
 
 $dbname   = "pinche";
 
