@@ -39,10 +39,12 @@
             tdHtml += '单价:' + price + '\r\n';
             tdHtml += '联系方式:' + mobile + '\r\n';
             tdHtml += '车牌信息:' + chepai + '\r\n';
-            tdHtml = replaceFunc(tdHtml, '<span style="color:green;font-weight:bold;">', '');
+            tdHtml = replaceFunc(tdHtml, '<span style="color:#009688;font-weight:bold;">', '');
             tdHtml = replaceFunc(tdHtml, '<span style="color:red;font-weight:bold;">', '');
             tdHtml = replaceFunc(tdHtml, '<div class="allow-edit" contenteditable="true">', '');
             tdHtml = replaceFunc(tdHtml, '</span>', '');
+            tdHtml = replaceFunc(tdHtml, '<b style="color: #2196f3;">', '');
+            tdHtml = replaceFunc(tdHtml, '</b>', '');
             tdHtml = replaceFunc(tdHtml, '</div>', '');
         });
 
@@ -54,7 +56,7 @@
                 } else {
                     href = 'https://uri.wiki/ePGGGC';
                 }
-                tdHtml = '【车找人】\r\n' + tdHtml + '\r\n马上预订: ' + href;
+                tdHtml = '【车找人】\r\n' + tdHtml + '\r\n预订有红包: ' + href;
                 console.log(''+tdHtml);
                 return tdHtml;
             }});
@@ -306,11 +308,11 @@
                     btnPassenger.html('发送');
                     if (sendResult === 1) {
                         btnPassenger.hide();
-                        $('.spanMsg').show();
+                        $('#spanSendSms').show();
                     }
                     return;
                 }
-                $('.btnPassenger').html(time + 's 后重新发送');
+                $('.btnPassenger').html(time + 's');
                 time--;
             }, 1000);
         });
@@ -335,12 +337,12 @@
         // 手机号码在本地存在，表示已经预订成功过，预订成功表示该手机号已经发送过验证码，则需要隐藏发送按钮
         if (!empty(localMobile)) {
             mobile.val(localMobile);
-            $('.btnPassenger').hide();
-            $('.spanMsg').show();
+            //$('.btnPassenger').hide();
+            //$('.spanMsg').show();
         }
 
         // 如果乘客的旧手机号不用了，换了新手机号，要保证可以正常发送验证码
-        mobile.keyup(function() {
+        /*mobile.keyup(function() {
             var curVal = $(this).val();
             if (curVal.length < 11 || curVal.length > 11) {
                 return;
@@ -352,7 +354,7 @@
                 $('.btnPassenger').hide();
                 $('.spanMsg').show();
             }
-        });
+        });*/
 
         $("#dialog-form-order").dialog({
             //autoOpen: false,

@@ -155,8 +155,10 @@ switch ($act) {
         $submail->AddVar('downaddr', $downCarAddr);
         // 生成司机短信里的短链接，点击可以确认预订
         $short = new ShortUrlModel();
-        $longUrl = SERVER_HOST.'pinche/v2/order.php?act=confirm&id='.$id.'&mobile='.$mobile.'&driverMobile='.$msgResult['car_tel'];
-        $submail->AddVar('link', SERVER_HOST.$short->generateUrl($longUrl));
+        $confirmLongUrl = SERVER_HOST.'pinche/v2/order.php?act=confirm&id='.$id.'&mobile='.$mobile.'&driverMobile='.$msgResult['car_tel'];
+        $rejectLongUrl = SERVER_HOST.'pinche/v2/order.php?act=reject&id='.$id.'&mobile='.$mobile.'&driverMobile='.$msgResult['car_tel'];
+        $submail->AddVar('link', SERVER_HOST.$short->generateUrl($confirmLongUrl));
+        $submail->AddVar('rejectlink', SERVER_HOST.$short->generateUrl($rejectLongUrl));
         $send=$submail->xsend();
         $send['type'] = '乘客预订-给司机发短信';
         $send['driver'] = $msgResult['car_tel'];
@@ -220,8 +222,58 @@ switch ($act) {
             // 修改红包编码使用状态
             $code->setIsUsed(CodelibModel::USE_YES);
             $code->setUpdateTime(getLocalDateTime());
-            $order->addWhere(['id' => $codeInfo['id']]);
-            $order->update();
+            $code->addWhere(['id' => $codeInfo['id']]);
+            $code->update();
+        }
+        echo '<script>alert("'.$msg.'");window.location.href="'.$url.'";</script>';
+        break;
+    case 'reject':
+        $msg = '已成功拒绝!';
+        // 确认行程对应的类型，是密云的还是河北的
+        $msgObj = new MessageModel();
+        $msgResult = $msgObj->getMessageById($id);
+        if (empty($msgResult)) {
+            $msg = '没有找到对应行程!';
+            echo '<script>alert("'.$msg.'");</script>';
+            die;
+        }
+        $url = SERVER_HOST.'pinche/v2/show.php?area='.$channelMappingForKey[$msgResult['channel']];
+        // 查询乘客预订的车主确认状态，若已经确认的，禁止再次确认
+        $order = new OrderModel();
+        $orderInfo = $order->getOrderInfo($id, $mobile);
+        if (empty($orderInfo)) {
+            $msg = '没有找到预订信息!';
+            echo '<script>alert("'.$msg.'");window.location.href="'.$url.'";</script>';
+            die;
+        }
+        if ($orderInfo['is_confirm'] == OrderModel::CONFIRM_REJECT) {
+            $msg = '您已经拒绝过了!';
+            echo '<script>alert("'.$msg.'");window.location.href="'.$url.'";</script>';
+            die;
+        }
+        // 已经确认过的预订不能再次拒绝
+        if ($orderInfo['is_confirm'] == OrderModel::CONFIRM_YES) {
+            $msg = '您已经确认了，不能再拒绝!';
+            echo '<script>alert("'.$msg.'");window.location.href="'.$url.'";</script>';
+            die;
+        }
+        $order->setIsConfirm(OrderModel::CONFIRM_REJECT);
+        $order->setUpdateTime(getLocalDateTime());
+        $order->addWhere(['id' => $orderInfo['id']]);
+        $order->update();
+
+        // 司机确认后，短信通知给乘客
+        $submail = new MESSAGEXsend($message_configs);
+        $submail->SetTo($mobile);
+        $submail->SetProject('oIgyi1');
+        $submail->AddVar('drivermobile', $driverMobile);
+        $send=$submail->xsend();
+        $send['type'] = '司机拒绝-给乘客发短信';
+        $send['driver'] = $driverMobile;
+        $send['passenger'] = $mobile;
+        file_put_contents(LOG_PATH . '/sms.log', json_encode($send, JSON_UNESCAPED_UNICODE) . "\r\n", FILE_APPEND);
+        if ($send['status'] != 'success') {
+            $msg = '给乘客发送确认验证码异常,请联系管理员!';
         }
         echo '<script>alert("'.$msg.'");window.location.href="'.$url.'";</script>';
         break;

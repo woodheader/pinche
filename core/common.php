@@ -83,7 +83,7 @@ function getAnyDateTime($flag = '') {
 
 function shorturl($url) {
     $charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    $key = 'abc'; //加盐
+    $key = 'woodhead'; //加盐
     $urlhash = md5($key . $url);
     $len = strlen($urlhash);
 

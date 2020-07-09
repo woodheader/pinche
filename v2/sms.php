@@ -120,11 +120,17 @@ switch ($act) {
         // 先保存入库
         $sms = new SmsModel();
         $sms->setMobile($mobile);
-        // 若对应手机号已经发送过短信，并且还没有过期，就不再二次发送，节省费用
-        $result = $sms->getSmsByConditions($mobile, $type);
-        if (!empty($result)) {
-            if ($result['expire_time'] > date('Y-m-d H:i:s')) {
-                die(json_encode($returnArr));
+        // 针对车主，若对应手机号已经发送过短信，并且还没有过期，就不再二次发送，节省费用
+        if ($type == SmsModel::TYPE_DRIVER) {
+            $result = $sms->getSmsByConditions($mobile, $type);
+            if (!empty($result)) {
+                if ($result['expire_time'] > date('Y-m-d H:i:s')) {
+                    $returnArr = [
+                        'result' => 1,
+                        'msg' => '发送过验证码,可重复使用！'
+                    ];
+                    die(json_encode($returnArr));
+                }
             }
         }
         $sms->setCode($code);

@@ -98,7 +98,7 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
         </div>
     </div>
     <table class="statistics-table">
-        <thead><tr class="hd"><th class="seq">序号</th><th>车主行程<span style="font-size: 8px">（座位数可以点击修改）</span></th></tr></thead>
+        <thead><tr class="hd"><th style="display: none;">序号</th><th class="seq">车主行程<span style="font-size: 8px">（座位数可以点击修改）</span></th></tr></thead>
         <tbody>
     <?php
         $trHtml = '';
@@ -107,15 +107,15 @@ $messageList = (new MessageModel())->getMessageList($areaTypeList[$area], date('
             if (is_array($goto)) {
                 $goto = $goto[$channelMapping[$area]];
             }
-            $color = $msg['goto'] == 1 ? 'green' : 'red';
+            $color = $msg['goto'] == 1 ? '#009688' : 'red';
             $carPrice = $priceMapping[$msg['car_price']];
-            $trHtml .= '<tr><td>'.$msg['id'].'</td>';
+            $trHtml .= '<tr><td style="display: none;">'.$msg['id'].'</td>';
             $trHtml .= '<td>';
             $trHtml .= '<table class="inner-table" border="0" cellspacing="0" cellpadding="0">';
             $trHtml .= '<tr><td class="inner-td-first">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期:</td><td class="inner-td-second">'.$msg['car_time'].'</td></tr>';
             $trHtml .= '<tr><td class="inner-td-first">方&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;向:</td><td class="inner-td-second"><span style="color:'.$color.';font-weight:bold;">'.$goto.'</span></td></tr>';
             $trHtml .= '<tr><td class="inner-td-first">行驶路线:</td><td class="inner-td-second">'.$msg['car_line'].'</td></tr>';
-            $trHtml .= '<tr><td class="inner-td-first">座&nbsp;&nbsp;位&nbsp;数:</td><td class="inner-td-second"><div class="allow-edit" contenteditable="true">'.$msg['car_seatnum'].'位'.($msg['car_seatnum'] <= 0 ? '<b style="color: red;">(车满)</b>' : '').'</div></td></tr>';
+            $trHtml .= '<tr><td class="inner-td-first">座&nbsp;&nbsp;位&nbsp;数:</td><td class="inner-td-second"><div class="allow-edit" contenteditable="true">'.$msg['car_seatnum'].'位'.($msg['car_seatnum'] <= 0 ? '<b style="color: #2196f3;">(车满)</b>' : '').'</div></td></tr>';
             $trHtml .= '<tr><td class="inner-td-first">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价:</td><td class="inner-td-second">'.$carPrice.'</td></tr>';
             $trHtml .= '<tr><td class="inner-td-first">联系方式:</td><td class="inner-td-second"><a href="tel://'.$msg['car_tel'].'">'.help::replaceWithStar($msg['car_tel'],'****',3,4).'</a></td></tr>';
             $trHtml .= empty($msg['car_wechat_img']) ? '' : '<tr><td class="inner-td-first">车主微信:</td><td class="inner-td-second"><img class="qrcode" src="'.$msg['car_wechat_img'].'" width="24px" height="24px" alt="车主微信"></td></tr>';

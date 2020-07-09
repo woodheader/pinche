@@ -24,6 +24,7 @@ class OrderModel extends ActiveRecord
 
     const CONFIRM_NO = 0;
     const CONFIRM_YES = 1;
+    const CONFIRM_REJECT = 2;
 
     /**
      * 表名称
@@ -47,7 +48,7 @@ class OrderModel extends ActiveRecord
 `passenger_num` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '乘客数量',
 `up_address` varchar(100) NOT NULL DEFAULT '' COMMENT '上车地点',
 `down_address` varchar(100) NOT NULL DEFAULT '' COMMENT '下车地点',
-`is_confirm` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '车主是否确认;0:否;1:是',
+`is_confirm` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '车主是否确认;0:否;1:同意;2:拒绝',
 `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态;0:无效;1:有效',
 `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',

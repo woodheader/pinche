@@ -100,6 +100,6 @@ switch ($act) {
         $log = new ShortUrlLogModel();
         $log->load($formData);
         $log->save();
-        header("Location: ". htmlspecialchars_decode($data['url']));
+        header("Location: ". htmlspecialchars_decode($data['url']), true, 301);
         break;
 }
